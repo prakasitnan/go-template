@@ -20,4 +20,10 @@ type UserResponse struct {
 	Result User `json:"result"`
 }
 
+type UserResponseError struct {
+	Status int64 `json:"status"`
+	Message string `json:"message"`
+	Result string `json:"result"`
+}
+
 

@@ -19,8 +19,8 @@ func Route(router *gin.Engine) *gin.Engine {
 		v1.GET("/users", handler.GelAllUsers)
 		v1.GET("/user/:id", handler.GetUserById)
 		v1.POST("/user", handler.CreateUser)
-		//v1.PUT("/user",)
-
+		v1.PUT("/user/:id", handler.UpdateUser)
+		v1.DELETE("/user/:id", handler.DeleteUser)
 	}
 
 	return router

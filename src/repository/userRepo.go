@@ -41,24 +41,23 @@ func GetUserById(id int64) (model.User, error) {
 	return user, nil
 }
 
-func CreateUser(user model.User) (model.User, error) {
+func CreateUser(user model.User) (int64, error) {
 	fmt.Println(user)
-	res, err := config.DB.Exec("INSERT INTO users (name, username, password, status) VALUES ($1, $2, $3, $4)", "test2", "test2", "test2", 1)
+	res, err := config.DB.Exec("INSERT INTO users (name, username, password, status) VALUES ($1, $2, $3, $4)", user.Name, user.Username, user.Password, 1)
 	if err != nil {
-		return user, errors.New("500. Internal Server Error." + err.Error())
+
 	}
 
 	id, errLastId := res.LastInsertId()
 	if errLastId != nil {
-		return user, errors.New("test "+ errLastId.Error())
+
 	}
 
-	user.Id = id
-	return user, nil
+	return id, nil
 }
 
 func UpdateUser(id int64, user model.User) (model.User, error) {
-	_, err := config.DB.Exec("UPDATE user SET name = $2, username=$3, password=$4, status=$5 WHERE id = $1", id, user.Name, user.Password, user.Status)
+	_, err := config.DB.Exec("UPDATE users SET name = $2, username=$3, password=$4, status=$5 WHERE id = $1;",id, user.Name, user.Username, user.Password, user.Status)
 	if err != nil {
 		return user, err
 	}
